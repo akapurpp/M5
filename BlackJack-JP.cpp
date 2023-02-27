@@ -34,7 +34,8 @@ int cartasValor[13] = { 11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10 };
 
 void menu() {
 	do {
-		cout << "        Cuantos jugadores desean ingresar a la sala--> ";
+		cout << "        Cuantos jugadores desean ingresar a la sala--> " << endl;
+		cout << "     Si elijes 1 jugaras contra la banca automatica--> ";
 		cin >> numj;
 		cout << endl;
 
