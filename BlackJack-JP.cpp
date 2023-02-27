@@ -72,7 +72,10 @@ void nombres() {
 		cin >> dinero[i];
 		cout << endl;
 	}
-	//nom[3] = "Banca";
+	
+	if (numj == 1) {
+		nom[2] = "Banca";
+	}
 
 	system("cls");
 
@@ -227,6 +230,7 @@ void repartoCartas() {
 		else {
 			surrender[0] = true;
 		}
+
 	}
 
 	system("Pause");
@@ -274,18 +278,30 @@ void ganador() {
 			}
 		}
 	}
-
-	if (winner[1]) {
-		cout << "El jugador " << nom[1] << " gana" << endl;
+	if (numj == 2) {
+		if (winner[1]) {
+			cout << "El jugador " << nom[1] << " gana" << endl;
+		}
+		else if (winner[0]) {
+			cout << "El jugador " << nom[0] << " gana" << endl;
+		}
+		else  if (winner[0] && winner[1]) {
+			empate = true;
+			cout << "Los jugadores " << nom[0] << " y " << nom[1] << " han empatado" << endl;
+		}
 	}
-	else if (winner[0]) {
-		cout << "El jugador " << nom[0] << " gana" << endl;
+	else if (numj == 1) {
+		if (winner[2]) {
+			cout << "El jugador " << nom[2] << " gana" << endl;
+		}
+		else if (winner[0]) {
+			cout << "El jugador " << nom[0] << " gana" << endl;
+		}
+		else  if (winner[0] && winner[2]) {
+			empate = true;
+			cout << "Los jugadores " << nom[0] << " y " << nom[2] << " han empatado" << endl;
+		}
 	}
-	else  if (winner[0] && winner[1]) {
-		empate = true;
-		cout << "Los jugadores " << nom[0] << " y " << nom[1] << " han empatado" << endl;
-	}
-
 	system("Pause");
 	system("cls");
 
@@ -294,21 +310,65 @@ void ganador() {
 void apuestas2() {
 	encabezado();
 	cout << "============Tabla de Apuestas Finales==========" << endl;
+	if (numj == 2) {
+		if (winner[0]) {
+			cout << "Jugador " << nom[0] << " gano--> " << (apuesta[0] * 2) << " creditos" << endl;
+		}
+		else if (winner[1]) {
+			cout << "Jugador " << nom[1] << " gano--> " << (apuesta[1] * 2) << " creditos" << endl;
 
+		}
+		else if (winner[0] && winner[1]) {
+			cout << "Se han devuelto los creditos por un empate." << endl;
+
+		}
+	}
+	else if (numj == 1) {
+		if (winner[2]) {
+		cout << "La Banca gano los creditos del jugador " << nom[0] << " por un total de " << (apuesta[0] * 2) << " creditos" << endl;
+		}
+		else if (winner[0]) {
+			cout << "Jugador " << nom[0] << " gano--> " << (apuesta[0] * 2) << " creditos" << endl;
+		}
+		else if (winner[0] && winner[2]) {
+			cout << "Se han devuelto los creditos por un empate." << endl;
+		}
+	}
+	
+
+
+
+	system("Pause");
+	system("cls");
+}
+
+void banca() {
+	encabezado();
+	cout << "Cartas De " << nom[2] << endl;
 	if (winner[0]) {
-		cout << "Jugador " << nom[0] << " gano--> " << (apuesta[0] * 2) << " creditos" << endl;
+		
 	}
-	else if (winner[1]) {
-		cout << "Jugador " << nom[1] << " gano--> " << (apuesta[1] * 2) << " creditos" << endl;
-
+	else if (winner[2]) {
+		
 	}
-	else if (winner[0] && winner[1]) {
-		cout << "Se han devuelto los creditos por un empate." << endl;
-
+	else {
+		//turno de la banca
+		while (!surrender[2]) {
+			eligeCartas(pointsPlayer[2], nom[2]);
+			Sleep(10);
+			surrender[2] = checkPuntos(pointsPlayer[2]);
+			if (!surrender[2]) {
+				//Comprueba si la banca ya gana por puntos
+				surrender[2] = checkGanador(pointsPlayer[0], pointsPlayer[2], winner[2]);
+			}
+		}
+		if (winner[2]) {
+			cout << "La banca gana y el jugador " << nom[0] << " pierde" << endl;
+		}
+		else if (winner[0]) {
+			cout << "La banca pierde y el jugador " << nom[0] << " gana" << endl;
+		}
 	}
-
-
-
 	system("Pause");
 	system("cls");
 }
@@ -323,8 +383,12 @@ void jugador1() {
 	surrender[0] = checkPuntos(pointsPlayer[0]);
 	Sleep(10);
 	repartoCartas();
-}
 
+	if (numj == 1) {
+		banca();
+	}
+}
+	
 void jugador2() {
 	if (numj == 2) {
 		encabezado();
