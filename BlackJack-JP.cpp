@@ -396,6 +396,8 @@ void jugador2() {
 		cout << "Cartas De " << nom[1] << endl;
 		eligeCartas(pointsPlayer[1], nom[1]);
 		Sleep(10);
+		eligeCartas(pointsPlayer[1], nom[1]);
+		Sleep(10);
 		repartoCartas2();
 	}
 }
